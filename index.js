@@ -58,8 +58,6 @@ io.on('connect', function(client) {
 
   console.log("connect CLIENT: ", client)
 
-  return;
-
   // var connection = client.accept(null, client.origin); 
 
   //
