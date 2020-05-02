@@ -54,9 +54,9 @@ function BroadcastPlayersList(){
     });
 }
 
-io.on('connection', function(client) {
+io.on('connect', function(client) {
 
-  console.log("Connection CLIENT: ", client)
+  console.log("connect CLIENT: ", client)
 
   return;
 
