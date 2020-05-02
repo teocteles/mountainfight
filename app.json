@@ -1,0 +1,22 @@
+{
+  "name": "Mountain Fight",
+  "description": "Mountain Fight",
+  "website": "https://github.com/teocteles",
+  "repository": "",
+  "logo": "",
+  "success_url": "/",
+  "keywords": [
+    "node",
+    "express",
+    "socket.io",
+    "realtime",
+    "websocket"
+  ],
+  "scripts": {
+  },
+  "addons": [
+  ],
+  "env": {
+    "BUILDPACK_URL": "https://github.com/heroku/heroku-buildpack-nodejs"
+  }
+}
