@@ -4,11 +4,6 @@ var io = require('socket.io')(http);
 
 var port = process.env.PORT || 3000;
 
-// app.get('/', function(req, res){
-//   res.sendFile(__dirname + '/index.html');
-// });
-
-
 // -----------------------------------------------------------
 // List of all players
 // -----------------------------------------------------------
@@ -59,19 +54,23 @@ function BroadcastPlayersList(){
     });
 }
 
-io.on('request', function(request){
+io.on('connection', function(client) {
 
-  var connection = request.accept(null, request.origin); 
+  console.log("Connection CLIENT: ", client)
+
+  return;
+
+  // var connection = client.accept(null, client.origin); 
 
   //
   // New Player has connected.  So let's record its socket
   //
-  var player = new Player(request.key, connection);
+  var player = new Player(client.key, connection);
 
   //
   // Add the player to the list of all players
   //
-  Players.push(player)
+  Players.push(player);
 
   //
   // We need to return the unique id of that player to the player itself
@@ -84,9 +83,10 @@ io.on('request', function(request){
   connection.on('message', function(data) {
 
     //
-    // Process the requested action
+    // Process the client action
     //
       var message = JSON.parse(data.utf8Data);
+      
       switch(message.action){
         //
         // When the user sends the "join" action, he provides a name.
