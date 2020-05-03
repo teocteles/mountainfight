@@ -35,6 +35,7 @@ function createPlayer(message) {
           "error": true,
           "msg":"Nick de usuário já existe"
         }
+        console.log("Usuario já existe! ", error);
         client.on('message',error);
         return;
       }
