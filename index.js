@@ -4,148 +4,82 @@ var io = require('socket.io')(http);
 
 var port = process.env.PORT || 3000;
 
+app.get('/', (req, res) => {
+  res.sendFile(__dirname + '/index.html');
+});
+
 // -----------------------------------------------------------
 // List of all players
 // -----------------------------------------------------------
 var Players = [];
 
-function Player(id, connection){
+function Player(id, name){
     this.id = id;
-    this.connection = connection;
-    this.name = "";
-    this.opponentIndex = null;
+    this.name = name;
     this.index = Players.length;
 }
 
 Player.prototype = {
     getId: function(){
-        return {name: this.name, id: this.id};
-    },
-    setOpponent: function(id){
-        var self = this;
-        Players.forEach(function(player, index){
-            if (player.id == id){
-                self.opponentIndex = index;
-                Players[index].opponentIndex = self.index;
-                return false;
-            }
-        });
+        return {id: this.id};
     }
 };
 
-// ---------------------------------------------------------
-// Routine to broadcast the list of all players to everyone
-// ---------------------------------------------------------
-function BroadcastPlayersList(){
-    var playersList = [];
-    Players.forEach(function(player){
-        if (player.name !== ''){
-            playersList.push(player.getId());
+function createPlayer(message) {
+      console.log("CREATE PLAYER: ", message)
+      let player = new Player(Players.length, message.nick);
+
+      if(Players.includes(message.nick)) {
+        let error = {
+          "action":"CREATE",
+          "error": true,
+          "msg":"Nick de usuário já existe"
         }
-    });
+        client.on('message',error);
+        return;
+      }
 
-    var message = JSON.stringify({
-        'action': 'players_list',
-        'data': playersList
-    });
-
-    Players.forEach(function(player){
-        player.connection.sendUTF(message);
-    });
+      Players.push(player);
 }
 
-io.on('connect', function(client) {
+io.on('connection', function(client) {
 
-  console.log("connect CLIENT: ", client)
+  console.log("Cliente conectado:: ", client);
 
-  // var connection = client.accept(null, client.origin); 
+    client.on('message', function(message) {
 
-  //
-  // New Player has connected.  So let's record its socket
-  //
-  var player = new Player(client.key, connection);
-
-  //
-  // Add the player to the list of all players
-  //
-  Players.push(player);
-
-  //
-  // We need to return the unique id of that player to the player itself
-  //
-  connection.sendUTF(JSON.stringify({action: 'connect', data: player.id}));
-
-  //
-  // Listen to any message sent by that player
-  //
-  connection.on('message', function(data) {
-
-    //
-    // Process the client action
-    //
-      var message = JSON.parse(data.utf8Data);
-      
       switch(message.action){
-        //
-        // When the user sends the "join" action, he provides a name.
-        // Let's record it and as the player has a name, let's 
-        // broadcast the list of all the players to everyone
-        //
-          case 'join':
-            player.name = message.data;
-            BroadcastPlayersList();
-            break;
+        case 'CREATE':
+          createPlayer(message);
 
-        //
-        // When a player resigns, we need to break the relationship
-        // between the 2 players and notify the other player 
-        // that the first one resigned
-        //
-          case 'resign':
-          console.log('resigned');
-            Players[player.opponentIndex]
-              .connection
-              .sendUTF(JSON.stringify({'action':'resigned'}));
-
-            setTimeout(function(){
-              Players[player.opponentIndex].opponentIndex = player.opponentIndex = null;
-            }, 0);
-            break;
-
-        //
-        // A player initiates a new game.
-        // Let's create a relationship between the 2 players and
-        // notify the other player that a new game starts
-        // 
-          case 'new_game':
-            player.setOpponent(message.data);
-            Players[player.opponentIndex]
-              .connection
-              .sendUTF(JSON.stringify({'action':'new_game', 'data': player.name}));
-            break;
-
-        //
-        // A player sends a move.  Let's forward the move to the other player
-        //
-          case 'play':
-            Players[player.opponentIndex]
-              .connection
-              .sendUTF(JSON.stringify({'action':'play', 'data': message.data}));
-            break;
+          let playerCreated = {
+            "action": "PLAYER_JOIN",
+            "data":  {
+                "nick": message.data.nick,
+                "skin": message.data.skin,
+                "id": Players[0].id,
+                "position": {
+                  "x": 12,
+                  "y": 10
+                }
+            },
+            "error": false,
+            "msg":""
+          }
+          io.emit('message', playerCreated);
+          break;
       }
+
     });
 
+  
+  });
+
   // user disconnected
-  connection.on('close', function(connection) {
+  io.on('close', function(connection) {
     // We need to remove the corresponding player
     // TODO
   });
-
-
-
-
-  
-});
 
 
 
