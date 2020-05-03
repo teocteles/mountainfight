@@ -69,6 +69,20 @@ io.on('connection', function(client) {
           }
           io.emit('message', playerCreated);
           break;
+
+        case 'MOVE':
+          let playerMove = {
+            "action": "MOVE",
+            "data":  {
+                "player_id": message.data.player_id,
+                "direction": message.data.direction,
+            },
+            "error": false,
+            "msg":""
+          }
+          io.emit('message', playerMove);
+
+          break;
       }
 
     });
