@@ -4,9 +4,9 @@ var io = require('socket.io')(http);
 
 var port = process.env.PORT || 3000;
 
-app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/index.html');
-});
+// app.get('/', (req, res) => {
+//   res.sendFile(__dirname + '/index.html');
+// });
 
 // -----------------------------------------------------------
 // List of all players
