@@ -24,7 +24,7 @@
     <script>
       $(function () {
         // var socket = io();
-        var socket = io.connect("https://mountainfight.herokuapp.com/");
+        var socket = io.connect("https://mountainfight.herokuapp.com/",  {rejectUnauthorized: false});
 
         $('form').submit(function(){
             let criarPlayer = {
