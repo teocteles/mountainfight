@@ -13,15 +13,19 @@ var port = process.env.PORT || 3000;
 // -----------------------------------------------------------
 var Players = [];
 
-function Player(id, name){
+function Player(id, nick){
     this.id = id;
-    this.name = name;
+    this.nick = nick;
     this.index = Players.length;
 }
 
 Player.prototype = {
     getId: function(){
-        return {id: this.id, };
+        return {id: this.id};
+    },
+    
+    getNick: function(){
+      return {nick: this.nick};
     }
 };
 
