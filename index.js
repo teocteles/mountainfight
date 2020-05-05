@@ -13,9 +13,10 @@ var port = process.env.PORT || 3000;
 // -----------------------------------------------------------
 var Players = [];
 
-function Player(id, nick){
+function Player(id, nick, skin){
     this.id = id;
     this.nick = nick;
+    this.skin = skin;
     this.index = Players.length;
 }
 
@@ -23,15 +24,20 @@ Player.prototype = {
     getId: function(){
         return {id: this.id};
     },
-    
     getNick: function(){
       return {nick: this.nick};
+    },
+    getSkin: function(){
+      return {skin: this.skin};
+    },
+    getIndex: function(){
+      return {index: this.index};
     }
 };
 
 function createPlayer(message) {
       console.log("CREATE PLAYER: ", message)
-      let player = new Player(Players.length, message.data.nick);
+      let player = new Player(Players.length, message.data.nick, message.data.skin);
       Players.push(player);
       console.log("PLAYERS DISPONÍVEIS: ", Players)
       return player;
