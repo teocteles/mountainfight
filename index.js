@@ -87,7 +87,8 @@ io.on('connection', function(client) {
                 "position": {
                   "x": 12,
                   "y": 10
-                }
+                },
+                "playersON": Players
             },
             "error": false,
             "msg":""
@@ -118,6 +119,7 @@ io.on('connection', function(client) {
 
   // user disconnected
   io.on('close', function(connection) {
+    console.log('Close: ', connection)
     // We need to remove the corresponding player
     // TODO
   });
