@@ -72,7 +72,7 @@ io.on('connection', function(client) {
             return;
           }
 
-          let playerCreated = {
+          let player = {
             "action": "PLAYER_JOIN",
             "data":  {
                 "nick": playerCreated.nick,
@@ -86,7 +86,7 @@ io.on('connection', function(client) {
             "error": false,
             "msg":""
           }
-          io.emit('message', playerCreated);
+          io.emit('message', player);
           playerCreated = null;
           break;
 
