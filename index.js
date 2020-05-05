@@ -119,14 +119,22 @@ io.on('connection', function(client) {
           break;
       }
 
-
       // user disconnected
       client.on('disconnect', function(connection) {
         console.log('DISCONNECT: ', connection)
         console.log("MESSAGE:: ", message)
+        let playerLeaved = {
+          "action": "PLAYER_LEAVED",
+          "data":  {
+              "nick": message.data.nick,
+              "id": message.data.player_id,
+          },
+          "error": false,
+          "msg":""
+        }
+        client.broadcast.emit('message', playerLeaved);
         delete Players[message.data.player_id];
-        // We need to remove the corresponding player
-        // TODO
+
       });
 
     });
