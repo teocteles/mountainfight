@@ -25,7 +25,7 @@ Player.prototype = {
     }
 };
 
-function createPlayer(client, message) {
+function createPlayer(message) {
       console.log("CREATE PLAYER: ", message)
       let player = new Player(Players.length, message.nick);
       Players.push(player);
