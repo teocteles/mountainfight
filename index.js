@@ -119,16 +119,16 @@ io.on('connection', function(client) {
           break;
       }
 
+
+      // user disconnected
+      client.on('disconnect', function(connection) {
+        console.log('DISCONNECT: ', connection)
+        console.log("MESSAGE:: ", message)
+        // We need to remove the corresponding player
+        // TODO
+      });
+
     });
-
-
-    // user disconnected
-    client.on('disconnect', function(connection) {
-      console.log('disconnect: ', connection)
-      // We need to remove the corresponding player
-      // TODO
-    });
-
   
   });
 
