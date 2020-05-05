@@ -68,7 +68,8 @@ io.on('connection', function(client) {
               "error": true,
               "msg":"Nick de usuário já existe"
             }
-            client.emit('message',error);
+            client.emit('message', error);
+            return;
           }
 
           let playerCreated = {
