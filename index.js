@@ -124,6 +124,7 @@ io.on('connection', function(client) {
       client.on('disconnect', function(connection) {
         console.log('DISCONNECT: ', connection)
         console.log("MESSAGE:: ", message)
+        delete Players[message.data.player_id];
         // We need to remove the corresponding player
         // TODO
       });
