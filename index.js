@@ -99,8 +99,7 @@ io.on('connection', function(client) {
             "error": false,
             "msg":""
           }
-          io.emit('message', playerMove);
-
+          client.broadcast.emit('message', playerMove);
           break;
       }
 
