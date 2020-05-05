@@ -38,15 +38,17 @@ function createPlayer(message) {
 }
 
 function existeNick(nickPlayer) {
+  let lRetorno = false;
   if(Players.length > 0) {
     Players.forEach(function(player) {
       console.log("EXISTE O NICK? ", player.nick, nickPlayer)
       if(player.nick.toLowerCase() == nickPlayer.toLowerCase()) {
-          return true;
+        lRetorno = true;
+        break;
       }
     })
   }
-  return false;
+  return lRetorno;
 }
 
 io.on('connection', function(client) {
