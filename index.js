@@ -121,8 +121,7 @@ io.on('connection', function(client) {
 
       // user disconnected
       client.on('disconnect', function(connection) {
-        console.log('DISCONNECT: ', connection)
-        console.log("MESSAGE:: ", message)
+        console.log('DISCONNECT: ', connection);
         let playerLeaved = {
           "action": "PLAYER_LEAVED",
           "data":  {
@@ -132,6 +131,7 @@ io.on('connection', function(client) {
           "error": false,
           "msg":""
         }
+        console.log("MESSAGE - playerLeaved:: ", playerLeaved);
         client.broadcast.emit('message', playerLeaved);
         delete Players[message.data.player_id];
 
