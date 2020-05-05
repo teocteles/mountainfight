@@ -31,7 +31,7 @@ Player.prototype = {
 
 function createPlayer(message) {
       console.log("CREATE PLAYER: ", message)
-      let player = new Player(Players.length, message.nick);
+      let player = new Player(Players.length, message.data.nick);
       Players.push(player);
       console.log("PLAYERS DISPONÍVEIS: ", Players)
       player = null;
@@ -40,19 +40,13 @@ function createPlayer(message) {
 function existeNick(nickPlayer) {
 
   if(Players.length > 0) {
-
-    Players.forEach(function(nick) {
-      if(Players.includes(message.nick)) {
-       
-        client.on('message',error);
+    Players.forEach(function(player) {
+      if(player.nick.toLowerCase() === nickPlayer.toLowerCase()) {
+          return true;
       }
-
     })
-
   }
-
   return false;
-
 }
 
 io.on('connection', function(client) {
@@ -64,7 +58,7 @@ io.on('connection', function(client) {
       switch(message.action){
         case 'CREATE':
 
-          if(!existeNick(message.nick)) {
+          if(!existeNick(message.data.nick)) {
             createPlayer(message);
           } else {
             let error = {
