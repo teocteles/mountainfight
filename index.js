@@ -41,6 +41,7 @@ function existeNick(nickPlayer) {
 
   if(Players.length > 0) {
     Players.forEach(function(player) {
+      console.log("EXISTE O PLAYER? ", player)
       if(player.nick.toLowerCase() === nickPlayer.toLowerCase()) {
           return true;
       }
