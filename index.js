@@ -28,21 +28,9 @@ Player.prototype = {
 function createPlayer(client, message) {
       console.log("CREATE PLAYER: ", message)
       let player = new Player(Players.length, message.nick);
-
-      if(existeNick(message.nick)) {
-        Players.push(player);
-        console.log("PLAYERS DISPONÍVEIS: ", Players)
-        player = null;
-      
-      } else {
-        let error = {
-          "action":"CREATE",
-          "error": true,
-          "msg":"Nick de usuário já existe"
-        }
-        client.on('message',error);
-      }
-
+      Players.push(player);
+      console.log("PLAYERS DISPONÍVEIS: ", Players)
+      player = null;
 }
 
 function existeNick(nickPlayer) {
@@ -71,7 +59,17 @@ io.on('connection', function(client) {
 
       switch(message.action){
         case 'CREATE':
-          createPlayer(client, message);
+
+          if(!existeNick(message.nick)) {
+            createPlayer(message);
+          } else {
+            let error = {
+              "action":"CREATE",
+              "error": true,
+              "msg":"Nick de usuário já existe"
+            }
+            client.on('message',error);
+          }
 
           let playerCreated = {
             "action": "PLAYER_JOIN",
