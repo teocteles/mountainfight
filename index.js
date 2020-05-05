@@ -44,7 +44,7 @@ function existeNick(nickPlayer) {
       console.log("EXISTE O NICK? ", player.nick, nickPlayer)
       if(player.nick.toLowerCase() == nickPlayer.toLowerCase()) {
         lRetorno = true;
-        break;
+        return;
       }
     })
   }
