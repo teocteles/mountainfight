@@ -25,7 +25,7 @@ Player.prototype = {
     }
 };
 
-function createPlayer(message) {
+function createPlayer(client, message) {
       console.log("CREATE PLAYER: ", message)
       let player = new Player(Players.length, message.nick);
 
@@ -71,7 +71,7 @@ io.on('connection', function(client) {
 
       switch(message.action){
         case 'CREATE':
-          createPlayer(message);
+          createPlayer(client, message);
 
           let playerCreated = {
             "action": "PLAYER_JOIN",
