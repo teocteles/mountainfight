@@ -13,11 +13,12 @@ var port = process.env.PORT || 3000;
 // -----------------------------------------------------------
 var Players = [];
 
-function Player(id, nick, skin){
+function Player(id, nick, skin, position){
     this.id = id;
     this.nick = nick;
     this.skin = skin;
     this.index = Players.length;
+    this.position = position
 }
 
 Player.prototype = {
@@ -32,12 +33,15 @@ Player.prototype = {
     },
     getIndex: function(){
       return {index: this.index};
+    },
+    getPosition: function(){
+      return {position: this.position};
     }
 };
 
 function createPlayer(message) {
       console.log("CREATE PLAYER: ", message)
-      let player = new Player(Players.length, message.data.nick, message.data.skin);
+      let player = new Player(Players.length, message.data.nick, message.data.skin, {"x": 12,"y": 10});
       Players.push(player);
       console.log("PLAYERS DISPONÍVEIS: ", Players)
       return player;
@@ -84,10 +88,7 @@ io.on('connection', function(client) {
                 "nick": playerCreated.nick,
                 "skin": playerCreated.skin,
                 "id": playerCreated.id,
-                "position": {
-                  "x": 12,
-                  "y": 10
-                },
+                "position": playerCreated.position,
                 "playersON": Players
             },
             "error": false,
@@ -103,10 +104,16 @@ io.on('connection', function(client) {
             "data":  {
                 "player_id": message.data.player_id,
                 "direction": message.data.direction,
+                "position": {
+                  "x": message.data.position.x,
+                  "y": message.data.position.y
+                }
             },
             "error": false,
             "msg":""
           }
+          //Atualizando a posição do player
+          Players[message.data.player_id].position = message.data.position;
           console.log("PLAYER MOVE TO: ", playerMove);
           client.broadcast.emit('message', playerMove);
           break;
