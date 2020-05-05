@@ -3,8 +3,11 @@
   "version": "0.0.1",
   "description": " Mountain fight Game",
   "dependencies": {
+    "bufferutil": "^4.0.1",
     "express": "^4.15.2",
-    "socket.io": "^1.7.3"
+    "socket.io": "^1.7.3",
+    "utf-8-validate": "^5.0.2",
+    "ws": "^7.2.5"
   },
   "scripts": {
     "start": "node index.js"

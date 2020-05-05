@@ -21,7 +21,7 @@ function Player(id, name){
 
 Player.prototype = {
     getId: function(){
-        return {id: this.id};
+        return {id: this.id, };
     }
 };
 
@@ -29,18 +29,38 @@ function createPlayer(message) {
       console.log("CREATE PLAYER: ", message)
       let player = new Player(Players.length, message.nick);
 
-      if(Players.includes(message.nick)) {
+      if(existeNick(message.nick)) {
+        Players.push(player);
+        console.log("PLAYERS DISPONÍVEIS: ", Players)
+        player = null;
+      
+      } else {
         let error = {
           "action":"CREATE",
           "error": true,
           "msg":"Nick de usuário já existe"
         }
-        console.log("Usuario já existe! ", error);
         client.on('message',error);
-        return;
       }
 
-      Players.push(player);
+}
+
+function existeNick(nickPlayer) {
+
+  if(Players.length > 0) {
+
+    Players.forEach(function(nick) {
+      if(Players.includes(message.nick)) {
+       
+        client.on('message',error);
+      }
+
+    })
+
+  }
+
+  return false;
+
 }
 
 io.on('connection', function(client) {
