@@ -38,11 +38,10 @@ function createPlayer(message) {
 }
 
 function existeNick(nickPlayer) {
-
   if(Players.length > 0) {
     Players.forEach(function(player) {
-      console.log("EXISTE O PLAYER? ", player)
-      if(player.nick.toLowerCase() === nickPlayer.toLowerCase()) {
+      console.log("EXISTE O NICK? ", player.nick, nickPlayer)
+      if(player.nick.toLowerCase() == nickPlayer.toLowerCase()) {
           return true;
       }
     })
