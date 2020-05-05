@@ -34,7 +34,7 @@ function createPlayer(message) {
       let player = new Player(Players.length, message.data.nick);
       Players.push(player);
       console.log("PLAYERS DISPONÍVEIS: ", Players)
-      player = null;
+      return player;
 }
 
 function existeNick(nickPlayer) {
@@ -59,9 +59,9 @@ io.on('connection', function(client) {
 
       switch(message.action){
         case 'CREATE':
-
+          let playerCreated = null;
           if(!existeNick(message.data.nick)) {
-            createPlayer(message);
+            playerCreated = createPlayer(message);
           } else {
             let error = {
               "action":"CREATE",
@@ -75,9 +75,9 @@ io.on('connection', function(client) {
           let playerCreated = {
             "action": "PLAYER_JOIN",
             "data":  {
-                "nick": message.data.nick,
-                "skin": message.data.skin,
-                "id": Players[0].id,
+                "nick": playerCreated.nick,
+                "skin": playerCreated.skin,
+                "id": playerCreated.id,
                 "position": {
                   "x": 12,
                   "y": 10
@@ -87,6 +87,7 @@ io.on('connection', function(client) {
             "msg":""
           }
           io.emit('message', playerCreated);
+          playerCreated = null;
           break;
 
         case 'MOVE':
@@ -114,9 +115,6 @@ io.on('connection', function(client) {
     // We need to remove the corresponding player
     // TODO
   });
-
-
-
 
 
 http.listen(port, function(){
