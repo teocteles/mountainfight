@@ -85,7 +85,7 @@ io.on('connection', function(client) {
             "data":  {
                 "nick": playerCreated.nick,
                 "skin": playerCreated.skin,
-                "id": playerCreated.id,
+                "player_id": playerCreated.player_id,
                 "position": playerCreated.position,
                 "playersON": Players
             },
