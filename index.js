@@ -119,7 +119,7 @@ io.on('connection', function(client) {
 
         case 'ATTACK':
           let playerAttack = {
-            "action": "MOVE",
+            "action": "ATTACK",
             "time": message.time || "",
             "data":  {
                 "player_id": message.data.player_id,
