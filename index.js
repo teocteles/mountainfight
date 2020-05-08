@@ -134,6 +134,20 @@ io.on('connection', function(client) {
           }
           client.broadcast.emit('message', playerAttack);
           break;
+
+        case 'RECEIVED_DAMAGE':
+          let playerDanage = {
+            "action": "RECEIVED_DAMAGE",
+            "time": message.time || "",
+            "data":  {
+                "player_id": message.data.player_id,
+                "damage": message.data.damage
+            },
+            "error": false,
+            "msg":""
+          }
+          client.broadcast.emit('message', playerDanage);
+          break;
       }
 
       // user disconnected
@@ -143,7 +157,7 @@ io.on('connection', function(client) {
           "action": "PLAYER_LEAVED",
           "data":  {
               "nick": message.data.nick,
-              "id": message.data.player_id,
+              "player_id": message.data.player_id,
           },
           "error": false,
           "msg":""
