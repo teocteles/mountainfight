@@ -136,7 +136,7 @@ io.on('connection', function(client) {
           break;
 
         case 'RECEIVED_DAMAGE':
-          let playerDanage = {
+          let playerDamage = {
             "action": "RECEIVED_DAMAGE",
             "time": message.time || "",
             "data":  {
@@ -146,7 +146,7 @@ io.on('connection', function(client) {
             "error": false,
             "msg":""
           }
-          client.broadcast.emit('message', playerDanage);
+          client.broadcast.emit('message', playerDamage);
           break;
       }
 
