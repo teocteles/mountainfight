@@ -81,7 +81,7 @@ io.on('connection', function(client) {
 
           let player = {
             "action": "PLAYER_JOIN",
-            "time": message.data.time || "",
+            "time": message.time || "",
             "data":  {
                 "nick": playerCreated.nick,
                 "skin": playerCreated.skin,
@@ -99,7 +99,7 @@ io.on('connection', function(client) {
         case 'MOVE':
           let playerMove = {
             "action": "MOVE",
-            "time": message.data.time || "",
+            "time": message.time || "",
             "data":  {
                 "player_id": message.data.player_id,
                 "direction": message.data.direction,
@@ -120,7 +120,7 @@ io.on('connection', function(client) {
         case 'ATTACK':
           let playerAttack = {
             "action": "MOVE",
-            "time": message.data.time || "",
+            "time": message.time || "",
             "data":  {
                 "player_id": message.data.player_id,
                 "direction": message.data.direction,
