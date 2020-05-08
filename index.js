@@ -20,7 +20,7 @@ function Player(player_id, nick, skin, position){
 
 Player.prototype = {
     getId: function(){
-        return {id: this.id};
+        return {player_id: this.player_id};
     },
     getNick: function(){
       return {nick: this.nick};
