@@ -81,6 +81,7 @@ io.on('connection', function(client) {
 
           let player = {
             "action": "PLAYER_JOIN",
+            "time": message.data.time || "",
             "data":  {
                 "nick": playerCreated.nick,
                 "skin": playerCreated.skin,
@@ -98,14 +99,14 @@ io.on('connection', function(client) {
         case 'MOVE':
           let playerMove = {
             "action": "MOVE",
+            "time": message.data.time || "",
             "data":  {
                 "player_id": message.data.player_id,
                 "direction": message.data.direction,
                 "position": {
                   "x": message.data.position.x,
                   "y": message.data.position.y
-                },
-                "time": message.data.time
+                }
             },
             "error": false,
             "msg":""
@@ -114,6 +115,24 @@ io.on('connection', function(client) {
           Players[message.data.player_id].position = message.data.position;
           console.log("PLAYER MOVE TO: ", playerMove);
           client.broadcast.emit('message', playerMove);
+          break;
+
+        case 'ATTACK':
+          let playerAttack = {
+            "action": "MOVE",
+            "time": message.data.time || "",
+            "data":  {
+                "player_id": message.data.player_id,
+                "direction": message.data.direction,
+                "position": {
+                  "x": message.data.position.x,
+                  "y": message.data.position.y
+                }
+            },
+            "error": false,
+            "msg":""
+          }
+          client.broadcast.emit('message', playerAttack);
           break;
       }
 
