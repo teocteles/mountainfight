@@ -101,7 +101,7 @@ io.on('connection', function(client) {
             "action": "MOVE",
             "time": message.time || "",
             "data":  {
-                "player_id": message.data.id,
+                "player_id": message.data.player_id,
                 "direction": message.data.direction,
                 "position": {
                   "x": message.data.position.x,
