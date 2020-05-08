@@ -22,9 +22,9 @@
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
     <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
     <script>
-      $(function () {
+      (function () {
         // var socket = io();
-        var socket = io.connect("https://mountainfight.herokuapp.com:37354");
+        var socket = io.connect("http://mountainfight.omv.jandersonlemos.com");
 
         $('form').submit(function(){
             let criarPlayer = {

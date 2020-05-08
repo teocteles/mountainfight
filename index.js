@@ -2,15 +2,12 @@ var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
-var port = process.env.PORT || 3000;
+var port = 3000;
 
-// app.get('/', (req, res) => {
+// app.get('/chat', (req, res) => {
 //   res.sendFile(__dirname + '/index.html');
 // });
 
-// -----------------------------------------------------------
-// List of all players
-// -----------------------------------------------------------
 var Players = [];
 
 function Player(id, nick, skin, position){
@@ -107,7 +104,8 @@ io.on('connection', function(client) {
                 "position": {
                   "x": message.data.position.x,
                   "y": message.data.position.y
-                }
+                },
+                "time": message.data.time
             },
             "error": false,
             "msg":""
