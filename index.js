@@ -10,8 +10,8 @@ var port = process.env.PORT || 3000;
 
 var Players = [];
 
-function Player(id, nick, skin, position){
-    this.id = id;
+function Player(player_id, nick, skin, position){
+    this.player_id = player_id;
     this.nick = nick;
     this.skin = skin;
     this.index = Players.length;
