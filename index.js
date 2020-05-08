@@ -22,6 +22,9 @@ Player.prototype = {
     getId: function(){
         return {player_id: this.player_id};
     },
+    getPlayer_id: function(){
+      return {player_id: this.player_id};
+    },
     getNick: function(){
       return {nick: this.nick};
     },
