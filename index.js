@@ -10,8 +10,8 @@ var port = process.env.PORT || 3000;
 
 var Players = [];
 
-function Player(player_id, nick, skin, position){
-    this.player_id = player_id;
+function Player(id, nick, skin, position){
+    this.id = id;
     this.nick = nick;
     this.skin = skin;
     this.index = Players.length;
@@ -20,10 +20,7 @@ function Player(player_id, nick, skin, position){
 
 Player.prototype = {
     getId: function(){
-        return {player_id: this.player_id};
-    },
-    getPlayer_id: function(){
-      return {player_id: this.player_id};
+        return {id: this.id};
     },
     getNick: function(){
       return {nick: this.nick};
@@ -88,7 +85,7 @@ io.on('connection', function(client) {
             "data":  {
                 "nick": playerCreated.nick,
                 "skin": playerCreated.skin,
-                "player_id": playerCreated.player_id,
+                "player_id": playerCreated.id,
                 "position": playerCreated.position,
                 "playersON": Players
             },
@@ -104,7 +101,7 @@ io.on('connection', function(client) {
             "action": "MOVE",
             "time": message.time || "",
             "data":  {
-                "player_id": message.data.player_id,
+                "player_id": message.data.id,
                 "direction": message.data.direction,
                 "position": {
                   "x": message.data.position.x,
