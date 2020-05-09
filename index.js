@@ -131,6 +131,7 @@ io.on('connection', function(client) {
               "error": false,
               "msg":""
             }
+            console.log("PLAYER ATTACK: ", playerAttack);
             client.broadcast.emit('message', playerAttack);
             break;
   
@@ -145,6 +146,7 @@ io.on('connection', function(client) {
               "error": false,
               "msg":""
             }
+            console.log("PLAYER DAMAGE: ", playerDamage);
             client.broadcast.emit('message', playerDamage);
             break;
       }
