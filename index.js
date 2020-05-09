@@ -2,7 +2,7 @@ var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
-var port = process.env.PORT || 3000;
+var port = 3000;
 
 // app.get('/chat', (req, res) => {
 //   res.sendFile(__dirname + '/index.html');
@@ -81,11 +81,10 @@ io.on('connection', function(client) {
 
           let player = {
             "action": "PLAYER_JOIN",
-            "time": message.time || "",
             "data":  {
                 "nick": playerCreated.nick,
                 "skin": playerCreated.skin,
-                "player_id": playerCreated.id,
+                "id": playerCreated.id,
                 "position": playerCreated.position,
                 "playersON": Players
             },
@@ -118,36 +117,37 @@ io.on('connection', function(client) {
           break;
 
         case 'ATTACK':
-          let playerAttack = {
-            "action": "ATTACK",
-            "time": message.time || "",
-            "data":  {
-                "player_id": message.data.player_id,
-                "direction": message.data.direction,
-                "position": {
-                  "x": message.data.position.x,
-                  "y": message.data.position.y
-                }
-            },
-            "error": false,
-            "msg":""
-          }
-          client.broadcast.emit('message', playerAttack);
-          break;
-
+            let playerAttack = {
+              "action": "ATTACK",
+              "time": message.time || "",
+              "data":  {
+                  "player_id": message.data.player_id,
+                  "direction": message.data.direction,
+                  "position": {
+                    "x": message.data.position.x,
+                    "y": message.data.position.y
+                  }
+              },
+              "error": false,
+              "msg":""
+            }
+            client.broadcast.emit('message', playerAttack);
+            break;
+  
         case 'RECEIVED_DAMAGE':
-          let playerDamage = {
-            "action": "RECEIVED_DAMAGE",
-            "time": message.time || "",
-            "data":  {
-                "player_id": message.data.player_id,
-                "damage": message.data.damage
-            },
-            "error": false,
-            "msg":""
-          }
-          client.broadcast.emit('message', playerDamage);
-          break;
+            let playerDamage = {
+              "action": "RECEIVED_DAMAGE",
+              "time": message.time || "",
+              "data":  {
+                  "player_id": message.data.player_id,
+                  "damage": message.data.damage
+              },
+              "error": false,
+              "msg":""
+            }
+            client.broadcast.emit('message', playerDamage);
+            break;
+        }
       }
 
       // user disconnected
@@ -157,7 +157,7 @@ io.on('connection', function(client) {
           "action": "PLAYER_LEAVED",
           "data":  {
               "nick": message.data.nick,
-              "player_id": message.data.player_id,
+              "id": message.data.player_id,
           },
           "error": false,
           "msg":""
