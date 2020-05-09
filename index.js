@@ -147,7 +147,6 @@ io.on('connection', function(client) {
             }
             client.broadcast.emit('message', playerDamage);
             break;
-        }
       }
 
       // user disconnected
