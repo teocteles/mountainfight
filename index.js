@@ -111,7 +111,9 @@ io.on('connection', function(client) {
             "msg":""
           }
           //Atualizando a posição do player
-          Players[message.data.player_id].position = message.data.position;
+          if(Players[message.data.player_id])
+            Players[message.data.player_id].position = message.data.position;
+            
           console.log("PLAYER MOVE TO: ", playerMove);
           client.broadcast.emit('message', playerMove);
           break;
