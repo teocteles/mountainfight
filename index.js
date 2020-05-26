@@ -47,6 +47,7 @@ Player.prototype = {
 function createPlayer(message) {
       console.log("CREATE PLAYER: ", message)
       let player = new Player(Players.length, message.data.nick, message.data.skin, {"x": 12,"y": 10});
+      console.log("PLAYER CREATED: ", player)
       Players.push(player);
       console.log("PLAYERS DISPONÍVEIS: ", Players)
       return player;
