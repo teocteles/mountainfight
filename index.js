@@ -15,7 +15,9 @@ function Player(id, nick, skin, position){
     this.nick = nick;
     this.skin = skin;
     this.index = Players.length;
-    this.position = position
+    this.position = position;
+    this.life = 100;
+    this.kills = 0;
 }
 
 Player.prototype = {
@@ -33,6 +35,12 @@ Player.prototype = {
     },
     getPosition: function(){
       return {position: this.position};
+    },
+    getLife: function(){
+      return {life: this.life};
+    },
+    getKills: function(){
+      return {kills: this.kills};
     }
 };
 
@@ -143,11 +151,18 @@ io.on('connection', function(client) {
               "time": message.time || "",
               "data":  {
                   "player_id": message.data.player_id,
+                  "player_id_attack": message.data.player_id_attack,
                   "damage": message.data.damage
               },
               "error": false,
               "msg":""
             }
+
+            Players[message.data.player_id].life -= message.data.damage;
+
+            if(Players[message.data.player_id].life <= 0) 
+              Players[message.data.player_id_attack].kills += 1; 
+
             console.log("PLAYER DAMAGE: ", playerDamage);
             client.broadcast.emit('message', playerDamage);
             break;
