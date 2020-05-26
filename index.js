@@ -44,9 +44,26 @@ Player.prototype = {
     }
 };
 
+const POSITIONS_BORN = [
+  {"x":34, "y": 21}, 
+  {"x":30, "y": 13}, 
+  {"x":22, "y": 17}, 
+  {"x":48, "y": 8}, 
+  {"x":44, "y": 13}, 
+  {"x":48, "y": 17}, 
+  {"x":42, "y": 22}, 
+  {"x":6, "y": 3}, 
+  {"x":6, "y": 8}, 
+  {"x":10, "y": 18}, 
+  {"x":12, "y": 24}, 
+  {"x":24, "y": 24}, 
+  {"x":20, "y": 1}, 
+  {"x":48, "y": 1}
+];
+
 function createPlayer(message) {
       console.log("CREATE PLAYER: ", message)
-      let player = new Player(Players.length, message.data.nick, message.data.skin, {"x": 12,"y": 10});
+      let player = new Player(Players.length, message.data.nick, message.data.skin, POSITIONS_BORN[Math.floor(Math.random() * POSITIONS_BORN.length)]);
       console.log("PLAYER CREATED: ", player)
       Players.push(player);
       console.log("PLAYERS DISPONÍVEIS: ", Players)
