@@ -204,7 +204,6 @@ io.on('connection', function(client) {
   
   });
 
-
 http.listen(port, function(){
   console.log('Mountain Fight on *:' + port);
 });
